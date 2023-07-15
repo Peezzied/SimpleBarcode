@@ -1,5 +1,6 @@
 import threading
 import time
+
 import json
 import sys
 import subprocess
@@ -89,17 +90,14 @@ def send_data(data):
             'payload': payload
         }
 
-        #CUSTOMIZE THIS FOR CUSTOM HOTKEY(S)
-        #CUSTOMIZE THIS FOR CUSTOM HOTKEY(S)
-        #CUSTOMIZE THIS FOR CUSTOM HOTKEY(S) \/ \/ \/
         if isinstance(quantityValue, (str, int)):
-            pyautogui.press('esc') if mode == 'withQuantity' else None
-            pyautogui.hotkey('shift', 'ctrl', 'f5') if mode == 'withQuantity' else None
+            pyautogui.press('esc')
+            pyautogui.hotkey('shift', 'ctrl', 'f5') if mode == 'withQuantity' or mode == 'instantScan' else None
             pyautogui.write(str(inputBoxValue)) #2
             pyperclip.copy(str(inputBoxValue))
-            pyautogui.press('tab') if mode == 'withQuantity' else None
-            pyautogui.write(str(quantityValue)) if mode == 'withQuantity' else None
-            pyautogui.press('tab') if mode == 'withQuantity' else pyautogui.press('enter')
+            pyautogui.press('tab') if mode == 'withQuantity' or mode == 'instantScan' else None
+            pyautogui.write(str(quantityValue)) if mode == 'withQuantity' or mode == 'instantScan' else None
+            pyautogui.press('tab') if mode == 'withQuantity' or mode == 'instantScan' else pyautogui.press('enter')
 
             show_notification("Barcode Received", f"{inputBoxValue} with quantity of {quantityValue}")
             # Process the received data as needed
@@ -118,10 +116,6 @@ def send_data(data):
 
 
 #NOTIFS
-
-def show_notification(icon, item):
-    # Add your notification logic here
-    print("Notification triggered!")
 
 def exit_action(tray):
     show_notification("Server Stop", "The barcode server will no longer receive datas.")
