@@ -328,7 +328,7 @@
             });
             socket.on('response', function(data) {
                 var response = JSON.parse(data);
-                if (sessionStorage.getItem('selectedMode') === 'withQuantity' || sessionStorage.getItem('selectedMode') === null) {
+                if (sessionStorage.getItem('selectedMode') === 'withQuantity' || sessionStorage.getItem('selectedMode') === 'instantScan'){
                     console.log("Response: " + response.message);
                     showAlert(response.message);
                 }
@@ -372,6 +372,9 @@
 
     <script>
         // Retrieve the stored mode option on page load
+        if(sessionStorage.getItem('selectedMode') === null){
+            sessionStorage.setItem('selectedMode','withQuantity');
+        }
         window.addEventListener('load', function() {
             var modeSelect = document.getElementById('mode');
             var storedMode = sessionStorage.getItem('selectedMode');
