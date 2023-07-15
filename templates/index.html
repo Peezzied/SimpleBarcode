@@ -416,9 +416,18 @@
         const overlay = document.getElementById('overlay');
         //barcode scanning
         //
+        let qrboxFunction = function(viewfinderWidth, viewfinderHeight) {
+            let minEdgePercentage = 0.7; // 70%
+            let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
+            let qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
+            return {
+                width: qrboxSize,
+                height: qrboxSize
+            };
+        }
         var sound = new Audio("/static/barcode.wav");
         var html5QrcodeScanner = new Html5QrcodeScanner(
-        "barcode-reader", { fps: 5, qrbox: 250, showTorchButtonIfSupported: true, showZoomSliderIfSupported: true, defaultZoomValueIfSupported: 2.2});
+        "barcode-reader", { fps: 5, qrbox: qrboxFunction, showTorchButtonIfSupported: true, showZoomSliderIfSupported: true, defaultZoomValueIfSupported: 2.2});
 
         function success(decodedText, decodedResult) {
             var mode = sessionStorage.getItem('selectedMode');
