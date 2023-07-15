@@ -4,9 +4,10 @@ A web live barcode scanner with quantity for small enterprises that feeds the ba
 The application is running with Minhazav's **html5-qrcode** and Flask's websocket **SocketIO** API to communicate with the local server running on the "P.O.S. machine" or the computer.
 
 ### Features
- - Fully Customizable both Python and HTML
+ - Fully Customizable for both Python and HTML
+ - System notification
  - UI included
- - Auto download of missing modules for python
+ - Auto download of missing modules for Python
  - After scan key and Hotbar inputs
  - Lightweight
  - Custom system tray for PC
