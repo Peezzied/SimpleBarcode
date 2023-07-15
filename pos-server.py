@@ -1,6 +1,5 @@
 import threading
 import time
-
 import json
 import sys
 import subprocess
@@ -90,6 +89,9 @@ def send_data(data):
             'payload': payload
         }
 
+        #CUSTOMIZE THIS FOR CUSTOM HOTKEY(S)
+        #CUSTOMIZE THIS FOR CUSTOM HOTKEY(S)
+        #CUSTOMIZE THIS FOR CUSTOM HOTKEY(S) \/ \/ \/
         if isinstance(quantityValue, (str, int)):
             pyautogui.press('esc') if mode == 'withQuantity' else None
             pyautogui.hotkey('shift', 'ctrl', 'f5') if mode == 'withQuantity' else None
