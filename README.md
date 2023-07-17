@@ -22,7 +22,7 @@ It is recommended to integrate it for Microsoft Excel spreadsheet *sales* or *pr
 
  1. Download Python v3.6 or newer version;
  2. Run `pos server.py`;
- 3. Search for the server's/computer's local IP Address; (e.g. 192.168.254.102)
+ 3. Search for the server's/computer's local IP Address, and add port 5000; (e.g. 192.168.254.102:5000)
  4. Enter the IP to the browser;
  5. Click the "Scan Product" header;
  6. then Start Scanning.
