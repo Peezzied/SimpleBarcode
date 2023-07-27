@@ -201,7 +201,7 @@
             overflow: hidden;
             z-index: 20;
             width: 100%;
-            height: 10%;
+            height: 5.5em;
         }
         .alert {
             min-width: 30%;
@@ -302,17 +302,23 @@
     <script src="/static/socket.io.min.js"></script>
     <script src="/static/html5-qrcode.min.js" integrity="sha512-r6rDA7W6ZeQhvl8S7yRVQUKVHdexq+GAlNkNNqVC7YyIV+NwqCTJe2hDWCiffTyRNOeGEzRRJ9ifvRm/HCzGYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        var socket = io();
+        socket.on('barcode', function(data) {
+            // Update the HTML element with the received product value
+            console.log("BARCODE SCANNED FROM HARDWARE");
+            document.getElementById("inputBox").value = data;
+            var selected = sessionStorage.getItem('selectedMode');
+            
+            if (selected==='instantScan'){
+                document.getElementById("submitButton").click();
+            }
+            
+        });
+    </script>
+    <script>
         var ifNewScan = null;
         var socket = io();
-        socket.on('last_scan', function(data) {
-            // Update the HTML element with the received product value
-            console.log("DATA RECEIVED FROM EXCEL");
-            var lastScanValue = data.lastScan;
-            if(lastScanValue != 'null') {
-                    sessionStorage.setItem("lastScan", lastScanValue);
-                    document.getElementById("subtitle").innerHTML = `<b>LAST SCAN: </b><i>${lastScanValue}</i>`;
-                }
-        });
+        
         document.getElementById("myForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
@@ -321,7 +327,7 @@
             var mode = sessionStorage.getItem('selectedMode')
             showAlert(`Sent: ${inputBoxValue}`);
             socket.emit('send_data', {
-                token: 'mhyrenzpharmacy',
+                token: ['mhyrenzpharmacy'],
                 inputBox: inputBoxValue,
                 quantity: quantityValue,
                 mode: (mode !== null) ? mode : "withQuantity"
@@ -378,16 +384,11 @@
         window.addEventListener('load', function() {
             var modeSelect = document.getElementById('mode');
             var storedMode = sessionStorage.getItem('selectedMode');
-            var storedScan = sessionStorage.getItem('lastScan');
+            //var storedScan = sessionStorage.getItem('lastScan');
 
             if (storedMode) {
                 modeSelect.value = storedMode;
                 handleModeChange(storedMode);
-            }
-            if (storedScan) {
-                document.getElementById('subtitle').innerHTML = `
-                    <b>LAST SCAN: </b><i>${storedScan}</i>
-                `;
             }
         });
 
@@ -397,6 +398,7 @@
             handleModeChange(selectedMode);
             // Store the selected mode in localStorage
             sessionStorage.setItem('selectedMode', selectedMode);
+            emitMode();
         });
 
         // Function to handle mode change
@@ -410,6 +412,16 @@
                 quantityInput.disabled = false;
                 quantityInput.setAttribute("value", 1);
             }
+        }
+        function emitMode() {
+            var storedMode = sessionStorage.getItem('selectedMode');
+            socket.emit('mode', {
+                token: ['mhyrenzpharmacy','mhyrenzpharmacy-out'],
+                inputBox: null,
+                quantity: 1,
+                mode: (storedMode !== null) ? storedMode : "withQuantity"
+            });
+            console.log(`Emitted ${storedMode}`);
         }
     </script>
         
