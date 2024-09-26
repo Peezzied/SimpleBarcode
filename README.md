@@ -28,7 +28,7 @@ It is recommended to integrate it for Microsoft Excel spreadsheet *sales* or *pr
  7. Click the "Scan Product" header;
  8. then Start Scanning.
 
-# Credits
+# Acknowledgement
 Thank you ChatGPT for guiding me.
 
 Initially developed for my family's business.
